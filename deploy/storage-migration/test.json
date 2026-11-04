@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "destinationAccount": "probonolawdatatestsuffix",
+  "sources": {
+    "portal": {
+      "account": "probonolawportal7n5eya35",
+      "containers": [
+        "feedback-images",
+        "staffphotos"
+      ],
+      "tables": [
+        "betatester",
+        "federaljurisdictions",
+        "newsletter",
+        "staff",
+        "statejurisdictions",
+        "tribaljurisdictions"
+      ]
+    },
+    "dataAutomation": {
+      "account": "dataautomationlasnn5vo5p",
+      "containers": [
+        "account-operations-checkpoints",
+        "account-operations-failed-events",
+        "aimie-operations-checkpoints",
+        "aimie-operations-failed-events",
+        "aimie-operations-results",
+        "email-operations-checkpoints",
+        "email-operations-failed-events",
+        "file-operations-checkpoints",
+        "file-operations-evidence-checkpoints",
+        "file-operations-evidence-event-checkpoints",
+        "file-operations-failed-events",
+        "file-operations-sync-state"
+      ],
+      "tables": [
+        "IngestionProgress"
+      ]
+    },
+    "integrityCache": {
+      "account": "integritycachetestsuffix",
+      "containers": [
+        "0a89gqwnld-encoded-b9526",
+        "0a89gqwnld-input-10950",
+        "1uyai2elm0-encoded-b7f10",
+        "1uyai2elm0-input-abbfd",
+        "3u73r7iivo-encoded-d47ce",
+        "3u73r7iivo-input-e88ce",
+        "45ja60hgjp-encoded-9dc6c",
+        "45ja60hgjp-input-a9713",
+        "517c2fbhrg-encoded-bbadb",
+        "517c2fbhrg-input-52b8a",
+        "5jg3o2katl-encoded-bb8ef",
+        "5jg3o2katl-input-0fe0f",
+        "7xkobu7dhn-encoded-83c44",
+        "7xkobu7dhn-input-351c1",
+        "8q8fxuarkm-encoded-6807a",
+        "8q8fxuarkm-input-9b469",
+        "cttsdk14oc-encoded-0f948",
+        "cttsdk14oc-input-66464",
+        "do02t96hwf-encoded-051ce",
+        "do02t96hwf-input-c74bd",
+        "eadedl4a8j-encoded-6c252",
+        "eadedl4a8j-input-0b3b6",
+        "exhibits",
+        "file-operations-evidence-budgets",
+        "file-operations-evidence-location-repairs",
+        "file-operations-evidence-replays",
+        "file-operations-evidence-tasks",
+        "file-operations-evidence-work",
+        "file-operations-operation-order",
+        "input",
+        "j03b0b621z-encoded-8a258",
+        "j03b0b621z-input-60330",
+        "lnjptvu7h0-encoded-79eaf",
+        "lnjptvu7h0-input-c400b",
+        "mmckmgncoi-encoded-7c574",
+        "mmckmgncoi-input-a3ed8",
+        "n04ekzuray-encoded-d1253",
+        "n04ekzuray-input-ab336",
+        "results",
+        "rjf67jxgf9-encoded-daa0d",
+        "rjf67jxgf9-input-6e373",
+        "tp9bhorw76-encoded-656b3",
+        "tp9bhorw76-input-34b5c",
+        "u5lch2qzfb-encoded-1cfb4",
+        "u5lch2qzfb-input-e8f2b",
+        "ub8jfqrnu5-encoded-a35bb",
+        "ub8jfqrnu5-input-1c943",
+        "utvsv4b5xl-encoded-96697",
+        "utvsv4b5xl-input-445b3",
+        "xq254qent5-encoded-c9801",
+        "xq254qent5-input-446b9",
+        "y92uphyuw0-encoded-dceb1",
+        "y92uphyuw0-input-89102",
+        "ydpoxstoe9-encoded-50d86",
+        "ydpoxstoe9-input-4e074",
+        "yoffkbtow3-encoded-af342",
+        "yoffkbtow3-input-51ecc"
+      ],
+      "tables": []
+    }
+  }
+}

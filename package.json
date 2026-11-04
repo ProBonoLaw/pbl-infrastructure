@@ -1,0 +1,23 @@
+{
+  "name": "probonolaw-infrastructure",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "verify": "tsc && node scripts/verify-graph.js",
+    "format": "prettier --write index.ts src/**/*.ts scripts/*.js"
+  },
+  "dependencies": {
+    "@pulumi/azure-native": "3.28.0",
+    "@pulumi/azure-native_cognitiveservices_v20260501": "file:sdks/azure-native_cognitiveservices_v20260501",
+    "@pulumi/azure-native_eventhub_v20240501preview": "file:sdks/azure-native_eventhub_v20240501preview",
+    "@pulumi/azure-native_videoindexer_v20250401": "file:sdks/azure-native_videoindexer_v20250401",
+    "@pulumi/pulumi": "3.265.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "prettier": "^3.9.9",
+    "typescript": "^5.9.3",
+    "yaml": "^2.9.1"
+  }
+}

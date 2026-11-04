@@ -1,0 +1,175 @@
+name: Deploy Production Infrastructure
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Pulumi operation
+        type: choice
+        options:
+          - preview
+          - refresh
+          - up
+        default: preview
+      allow_non_main:
+        description: Allow a manually selected branch to access the Production stack
+        type: boolean
+        default: false
+      excluded_resources:
+        description: Optional newline-separated Pulumi URNs to exclude from this run
+        type: string
+        default: ''
+      target_resources:
+        description: Optional newline-separated Pulumi URNs to update in this run
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pulumi-production
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify Pulumi program
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify Production resource graph
+        run: npm run verify
+        env:
+          GRAPH_ENVIRONMENT_NAME: Production
+
+  preview:
+    name: Preview Production stack
+    needs: verify
+    if: ${{ github.ref == 'refs/heads/main' || inputs.allow_non_main }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AZURE_STORAGE_ACCOUNT: pbldeployments
+      PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+      FOUNDRY_PRIMARY_NAME: ${{ vars.FOUNDRY_PRIMARY_NAME }}
+      FOUNDRY_DATA_LOADER_NAME: ${{ vars.FOUNDRY_DATA_LOADER_NAME }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply deployment values
+        if: ${{ hashFiles('deployment-values.json') != '' }}
+        run: node scripts/apply-deployment-values.js
+
+      - name: Sign in to Azure with OIDC
+        uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Preview Production Pulumi changes
+        uses: pulumi/actions@v7
+        with:
+          command: preview
+          stack-name: prod
+          work-dir: .
+          cloud-url: azblob://prod
+          pulumi-version: 3.265.0
+          parallel: 2
+          diff: true
+          exclude: ${{ inputs.excluded_resources }}
+          target: ${{ inputs.target_resources }}
+          color: never
+          suppress-outputs: true
+
+  deploy:
+    name: Update Production stack
+    needs: preview
+    if: ${{ (github.ref == 'refs/heads/main' || inputs.allow_non_main) && (inputs.operation == 'up' || inputs.operation == 'refresh') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AZURE_STORAGE_ACCOUNT: pbldeployments
+      PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+      FOUNDRY_PRIMARY_NAME: ${{ vars.FOUNDRY_PRIMARY_NAME }}
+      FOUNDRY_DATA_LOADER_NAME: ${{ vars.FOUNDRY_DATA_LOADER_NAME }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply deployment values
+        if: ${{ hashFiles('deployment-values.json') != '' }}
+        run: node scripts/apply-deployment-values.js
+
+      - name: Sign in to Azure with OIDC
+        uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Run Pulumi operation
+        uses: pulumi/actions@v7
+        with:
+          command: ${{ inputs.operation }}
+          stack-name: prod
+          work-dir: .
+          cloud-url: azblob://prod
+          pulumi-version: 3.265.0
+          parallel: 2
+          diff: true
+          exclude: ${{ inputs.excluded_resources }}
+          target: ${{ inputs.target_resources }}
+          color: never
+          suppress-outputs: true
+          message: GitHub Actions run ${{ github.run_id }} (${{ github.sha }})
+
+      - name: Ensure Production Prometheus collection
+        if: ${{ inputs.operation == 'up' }}
+        env:
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        run: bash scripts/ensure-production-prometheus.sh
+
+      - name: Ensure public Production API ingress and certificate
+        if: ${{ inputs.operation == 'up' }}
+        env:
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        run: bash scripts/ensure-portal-api-bootstrap.sh prod

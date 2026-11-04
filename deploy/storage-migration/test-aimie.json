@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "destinationAccount": "aimiedatatestsuffix",
+  "sources": {
+    "aimieConfig": {
+      "account": "aimieconfigtestsuffix001",
+      "containers": [
+        "agents"
+      ],
+      "tables": []
+    },
+    "aimieHistory": {
+      "account": "aimieserviceclxo2mycjfpl",
+      "containers": [
+        "aimieserviceakstest-largemessages",
+        "aimieserviceclxo2myc-largemessages",
+        "testhubname-largemessages"
+      ],
+      "tables": [
+        "AimieServiceAksTestHistory",
+        "AimieServiceAksTestInstances",
+        "aimieserviceclxo2mycHistory",
+        "aimieserviceclxo2mycInstances",
+        "TestHubNameHistory",
+        "TestHubNameInstances"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+name: probonolaw-infrastructure
+runtime:
+  name: nodejs
+  options:
+    typescript: true
+description: Pro Bono Law Azure infrastructure managed with Pulumi Azure Native
+packages:
+  azure-native_videoindexer_v20250401:
+    source: azure-native
+    version: 3.28.0
+    parameters:
+      - videoindexer
+      - "2025-04-01"
+  azure-native_eventhub_v20240501preview:
+    source: azure-native
+    version: 3.28.0
+    parameters:
+      - eventhub
+      - "2024-05-01-preview"
+  azure-native_cognitiveservices_v20260501:
+    source: azure-native
+    version: 3.28.0
+    parameters:
+      - cognitiveservices
+      - "2026-05-01"

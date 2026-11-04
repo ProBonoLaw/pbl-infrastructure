@@ -1,0 +1,35 @@
+{
+    "name": "@pulumi/azure-native_videoindexer_v20250401",
+    "version": "3.28.0",
+    "keywords": [
+        "pulumi",
+        "azure",
+        "azure-native",
+        "category/cloud",
+        "kind/native"
+    ],
+    "homepage": "https://pulumi.com",
+    "repository": "https://github.com/pulumi/pulumi-azure-native",
+    "license": "Apache-2.0",
+    "main": "bin/index.js",
+    "scripts": {
+        "build": "tsc",
+        "postinstall": "node ./scripts/postinstall.js"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.142.0",
+        "@types/node": "^18",
+        "async-mutex": "^0.5.0",
+        "typescript": "^4.3.5"
+    },
+    "pulumi": {
+        "resource": true,
+        "name": "azure-native",
+        "version": "3.28.0",
+        "parameterization": {
+            "name": "azure-native_videoindexer_v20250401",
+            "version": "3.28.0",
+            "value": "ZXlKdGIyUjFiR1VpT2lKMmFXUmxiMmx1WkdWNFpYSWlMQ0oyWlhKemFXOXVJam9pZGpJd01qVXdOREF4SW4wPQ=="
+        }
+    }
+}

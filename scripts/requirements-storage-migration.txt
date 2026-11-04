@@ -1,0 +1,4 @@
+azure-identity>=1.20,<2
+azure-storage-blob>=12.25,<13
+azure-data-tables>=12.6,<13
+azure-storage-queue>=12.12,<13

@@ -1,0 +1,38 @@
+# Render with scripts/render-portal-public-ingress.ps1 after provisioning the stack.
+apiVersion: approuting.kubernetes.azure.com/v1alpha1
+kind: NginxIngressController
+metadata:
+  name: portal-public
+spec:
+  ingressClassName: portal-public
+  controllerNamePrefix: portal-public
+  loadBalancerAnnotations:
+    service.beta.kubernetes.io/azure-pip-name: "${PUBLIC_IP_NAME}"
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: "${AKS_RESOURCE_GROUP}"
+---
+# Apply the Ingress after the API Service and TLS secret exist in this namespace.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: portal-api
+  namespace: ${API_NAMESPACE}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  ingressClassName: portal-public
+  tls:
+    - hosts:
+        - ${API_ORIGIN_HOSTNAME}
+      secretName: portal-api-tls
+  rules:
+    - host: ${API_ORIGIN_HOSTNAME}
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: ${API_SERVICE_NAME}
+                port:
+                  number: 80

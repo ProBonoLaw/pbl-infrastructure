@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.pulumi/
+__pycache__/
+*.pyc
+.venv-storage-migration/
+
+# local scrubbing workspace - never commit, contains live identifiers
+.scrub-replacements.local.txt
+.secret-cleanup.local.sh
+.vscode/settings.json
+
+# real deployment values for a private deployment copy - never commit to a public repo
+deployment-values.json

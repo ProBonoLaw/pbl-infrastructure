@@ -1,0 +1,8 @@
+title = "pbl-infrastructure"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Azure built-in role definition IDs are public constants, not credentials"
+paths = ['''src/core/iam\.ts''']

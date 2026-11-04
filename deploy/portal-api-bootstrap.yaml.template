@@ -1,0 +1,41 @@
+# Render with scripts/render-portal-api-bootstrap.ps1 after provisioning the stack.
+# The namespace and cert-manager must exist before applying this manifest.
+apiVersion: approuting.kubernetes.azure.com/v1alpha1
+kind: NginxIngressController
+metadata:
+  name: portal-public
+spec:
+  ingressClassName: portal-public
+  controllerNamePrefix: portal-public
+  loadBalancerAnnotations:
+    service.beta.kubernetes.io/azure-pip-name: "${PUBLIC_IP_NAME}"
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: "${AKS_RESOURCE_GROUP}"
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-portal-api
+  namespace: ${API_NAMESPACE}
+spec:
+  acme:
+    email: ${ACME_EMAIL}
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-portal-api-account
+    solvers:
+      - http01:
+          ingress:
+            ingressClassName: portal-public
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: portal-api-tls
+  namespace: ${API_NAMESPACE}
+spec:
+  secretName: portal-api-tls
+  dnsNames:
+    - ${API_ORIGIN_HOSTNAME}
+  issuerRef:
+    kind: Issuer
+    name: letsencrypt-portal-api

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "destinationAccount": "aimiedataprodsuffix",
+  "sources": {
+    "aimieConfig": {
+      "account": "aimieconfigprodsuffix001",
+      "containers": [
+        "agents"
+      ],
+      "tables": []
+    },
+    "aimieHistory": {
+      "account": "aimieserviceobgbxpas4ai6",
+      "containers": [
+        "aimieserviceaksproduction-largemessages",
+        "aimieserviceobgbxpas-largemessages"
+      ],
+      "tables": [
+        "AimieServiceAksProductionHistory",
+        "AimieServiceAksProductionInstances",
+        "aimieserviceobgbxpasHistory",
+        "aimieserviceobgbxpasInstances"
+      ]
+    }
+  }
+}

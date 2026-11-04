@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "ES2020",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    },
+    "files": [
+        "config/index.ts",
+        "config/vars.ts",
+        "index.ts",
+        "provider.ts",
+        "types/enums/index.ts",
+        "types/enums/videoindexer/index.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts",
+        "videoindexer/account.ts",
+        "videoindexer/getAccount.ts",
+        "videoindexer/getPrivateEndpointConnection.ts",
+        "videoindexer/index.ts",
+        "videoindexer/privateEndpointConnection.ts"
+    ]
+}

@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "destinationAccount": "probonolawdataprodsuffix",
+  "sources": {
+    "portal": {
+      "account": "probonolawportalkc7ebqpb",
+      "containers": [
+        "feedback-images",
+        "staffphotos"
+      ],
+      "tables": [
+        "betatester",
+        "federaljurisdictions",
+        "newsletter",
+        "staff",
+        "statejurisdictions",
+        "tribaljurisdictions"
+      ]
+    },
+    "dataAutomation": {
+      "account": "dataautomationlavdqzxqu4",
+      "containers": [
+        "account-operations-checkpoints",
+        "account-operations-failed-events",
+        "aimie-operations-checkpoints",
+        "aimie-operations-failed-events",
+        "aimie-operations-results",
+        "email-operations-checkpoints",
+        "email-operations-failed-events",
+        "file-operations-checkpoints",
+        "file-operations-evidence-checkpoints",
+        "file-operations-evidence-event-checkpoints",
+        "file-operations-failed-events",
+        "file-operations-sync-state"
+      ],
+      "tables": [
+        "IngestionProgress"
+      ]
+    },
+    "integrityCache": {
+      "account": "integritycacheprodsuffix",
+      "containers": [
+        "2t4982ymhc-encoded-62ebd",
+        "2t4982ymhc-input-1ee45",
+        "3qvghtzeab-encoded-1cb63",
+        "3qvghtzeab-input-c7fea",
+        "ar947dbrwy-encoded-9d6c2",
+        "ar947dbrwy-input-dbdc8",
+        "c4gsz5qawe-encoded-27b85",
+        "c4gsz5qawe-input-ae955",
+        "c66c8sirtz-encoded-2970a",
+        "c66c8sirtz-input-6bd9c",
+        "exhibits",
+        "file-operations-evidence-tasks",
+        "file-operations-evidence-work",
+        "file-operations-operation-order",
+        "fzgwab69th-encoded-a3569",
+        "fzgwab69th-input-6b5f0",
+        "h222qzx4v7-encoded-0cd88",
+        "h222qzx4v7-input-56094",
+        "input",
+        "iomurvfkte-encoded-ab906",
+        "iomurvfkte-input-b716a",
+        "jxvxnear1k-encoded-d7822",
+        "jxvxnear1k-input-3ae1a",
+        "q6nnxqaeuh-encoded-6c019",
+        "q6nnxqaeuh-input-ccafc",
+        "qwqnqxntae-encoded-2d1aa",
+        "qwqnqxntae-input-bd46e",
+        "results",
+        "ryqx3j9d7o-encoded-87de4",
+        "ryqx3j9d7o-input-8e3e2"
+      ],
+      "tables": []
+    }
+  }
+}

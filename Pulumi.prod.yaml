@@ -1,0 +1,18 @@
+config:
+  probonolaw-infrastructure:environmentName: Production
+  probonolaw-infrastructure:cosmosProvisioned: true
+  probonolaw-infrastructure:cosmosNorthCentral: true
+  probonolaw-infrastructure:skuName: B2
+  probonolaw-infrastructure:apiOriginDnsZone: probono-law.com
+  probonolaw-infrastructure:keepLegacyPortalWebApp: false
+  probonolaw-infrastructure:productionLegacyApexIp: 203.0.113.153
+  probonolaw-infrastructure:productionApexFrontDoor: true
+  probonolaw-infrastructure:stageAimieStorageNorthCentral: true
+  probonolaw-infrastructure:stageSharedStorageNorthCentral: true
+  probonolaw-infrastructure:aksNodeMinCount: 5
+  probonolaw-infrastructure:aksNodeMaxCount: 10
+  probonolaw-infrastructure:aksKubernetesVersion: "1.35"
+  probonolaw-infrastructure:aksOperatorIpCidr: 203.0.113.150/32
+  probonolaw-infrastructure:aksCertificateOperatorPrincipalId: 00000000-0000-4000-8000-000000000001
+  azure-native:subscriptionId: 00000000-0000-4000-8000-000000000002
+encryptionsalt: v1:3AqevSMtb1c=:v1:71gQ6zb4/bjI8Ea2:wfJdpa7QlhsnmBga0QR4ERpNMbhrzQ==

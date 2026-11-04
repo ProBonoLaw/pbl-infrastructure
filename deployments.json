@@ -1,0 +1,335 @@
+[
+  {
+    "capacity": 167,
+    "modelName": "gpt-4o-transcribe-diarize",
+    "modelVersion": "2025-10-15",
+    "name": "gpt-4o-transcribe-diarize",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 100,
+    "modelName": "gpt-4o-transcribe",
+    "modelVersion": "2025-03-20",
+    "name": "gpt-4o-transcribe",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 328,
+    "modelName": "gpt-4o-mini-tts",
+    "modelVersion": "2025-03-20",
+    "name": "gpt-4o-mini-tts",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 1005,
+    "modelName": "gpt-4.1-nano",
+    "modelVersion": "2025-04-14",
+    "name": "question-generator-nano",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 350,
+    "modelName": "text-embedding-3-large",
+    "modelVersion": "1",
+    "name": "text-embedding-3-large",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "Standard",
+    "upgrade": "NoAutoUpgrade"
+  },
+  {
+    "capacity": 738,
+    "modelName": "text-embedding-3-small",
+    "modelVersion": "1",
+    "name": "text-embedding-3-small",
+    "raiPolicyName": "Microsoft.DefaultV2",
+    "skuName": "GlobalStandard",
+    "upgrade": "NoAutoUpgrade"
+  },
+  {
+    "capacity": 200,
+    "modelName": "gpt-5.1",
+    "modelVersion": "2025-11-13",
+    "name": "rhetoric-generator-gpt-5.1",
+    "raiPolicyName": "CourtDocs",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 150,
+    "modelName": "gpt-5.2",
+    "modelVersion": "2025-12-11",
+    "name": "cross-examination-gpt-5.2",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 200,
+    "modelName": "gpt-5.1",
+    "modelVersion": "2025-11-13",
+    "name": "declaration-final-generator-5.1",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 200,
+    "modelName": "gpt-5.1",
+    "modelVersion": "2025-11-13",
+    "name": "fact-finder-5.1",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 200,
+    "modelName": "gpt-5.1",
+    "modelVersion": "2025-11-13",
+    "name": "final-decision-gpt-5.1",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 150,
+    "modelName": "gpt-5.2",
+    "modelVersion": "2025-12-11",
+    "name": "final-declaration-gpt-5.2",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 150,
+    "modelName": "gpt-5.2",
+    "modelVersion": "2025-12-11",
+    "name": "gpt-5.2-doc-loader-fact-finder",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 150,
+    "modelName": "gpt-5.2",
+    "modelVersion": "2025-12-11",
+    "name": "gpt-5.2-final-decision-argument",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 1000,
+    "modelName": "gpt-5",
+    "modelVersion": "2025-08-07",
+    "name": "gpt-5-final-response",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 1000,
+    "modelName": "gpt-5-mini",
+    "modelVersion": "2025-08-07",
+    "name": "gpt-5-mini-qa",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 5000,
+    "modelName": "gpt-5-nano",
+    "modelVersion": "2025-08-07",
+    "name": "gpt-5-nano-qa",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 150,
+    "modelName": "gpt-5.2",
+    "modelVersion": "2025-12-11",
+    "name": "initial-argument-gpt-5.2",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 200,
+    "modelName": "gpt-5.1",
+    "modelVersion": "2025-11-13",
+    "name": "qa-full-5.1",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 200,
+    "modelName": "gpt-chat-latest",
+    "modelVersion": "2026-08-06",
+    "name": "qa-gpt-5.1-chat",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 300,
+    "modelName": "gpt-5.2",
+    "modelVersion": "2025-12-11",
+    "name": "qa-gpt-5.2",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "DataZoneStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 10000,
+    "modelName": "gpt-5.4",
+    "modelVersion": "2026-03-05",
+    "name": "qa-gpt-5.4",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 10000,
+    "modelName": "gpt-5.4-mini",
+    "modelVersion": "2026-03-17",
+    "name": "fact-finder-gpt-5.4-mini",
+    "raiPolicyName": "CourtDocs",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 7111,
+    "modelName": "gpt-5",
+    "modelVersion": "2025-08-07",
+    "name": "chat-gpt-5",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 5000,
+    "modelName": "gpt-chat-latest",
+    "modelVersion": "2026-08-06",
+    "name": "qa-gpt-chat-latest",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 5963,
+    "modelName": "gpt-5.5",
+    "modelVersion": "2026-04-24",
+    "name": "argument-gpt-5.5",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 72894,
+    "modelName": "gpt-5.4-nano",
+    "modelVersion": "2026-03-17",
+    "name": "question-generatorgpt-5.4-nano",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 250,
+    "modelName": "gpt-5.4-nano",
+    "modelVersion": "2026-03-17",
+    "name": "gpt-5.4-nano",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 34655,
+    "modelName": "gpt-5.4-nano",
+    "modelVersion": "2026-03-17",
+    "name": "questions-gpt-5.4-nano",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 10795,
+    "modelName": "gpt-5.4-mini",
+    "modelVersion": "2026-03-17",
+    "name": "qa-gpt-5.4-mini",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 4680,
+    "modelName": "gpt-5.6-luna",
+    "modelVersion": "2026-07-09",
+    "name": "gpt-5.6-luna",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 7609,
+    "modelName": "gpt-5.6-terra",
+    "modelVersion": "2026-07-09",
+    "name": "gpt-5.6-terra",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 5181,
+    "modelName": "gpt-5.6-sol",
+    "modelVersion": "2026-07-09",
+    "name": "gpt-5.6-sol",
+    "raiPolicyName": "SensitiveInfoLevel",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 8981,
+    "modelName": "model-router",
+    "modelVersion": "2025-11-18",
+    "name": "test-model-router",
+    "raiPolicyName": "Microsoft.DefaultV2",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 2894,
+    "modelName": "claude-sonnet-5",
+    "modelVersion": "2",
+    "name": "claude-sonnet-5",
+    "raiPolicyName": "Microsoft.DefaultV2",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 5281,
+    "modelName": "claude-haiku-4-5",
+    "modelVersion": "2",
+    "name": "claude-haiku-4-5",
+    "raiPolicyName": "Microsoft.DefaultV2",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  },
+  {
+    "capacity": 3957,
+    "modelName": "claude-opus-5",
+    "modelVersion": "2",
+    "name": "claude-opus-5",
+    "raiPolicyName": "Microsoft.DefaultV2",
+    "skuName": "GlobalStandard",
+    "upgrade": "OnceNewDefaultVersionAvailable"
+  }
+]

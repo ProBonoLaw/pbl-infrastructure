@@ -1,0 +1,10 @@
+config:
+  probonolaw-infrastructure:environmentName: Test
+  probonolaw-infrastructure:cosmosProvisioned: true
+  probonolaw-infrastructure:cosmosNorthCentral: true
+  probonolaw-infrastructure:skuName: B1
+  probonolaw-infrastructure:apiOriginDnsZone: probono-law.com
+  probonolaw-infrastructure:keepLegacyPortalWebApp: false
+  probonolaw-infrastructure:stageSharedStorageNorthCentral: true
+  azure-native:subscriptionId: 00000000-0000-4000-8000-000000000003
+encryptionsalt: v1:JeWFd0AMSAo=:v1:IDITxUKKzgMeLuLo:yk2SvapKbRtycKFkKmpXXtO5Izif6Q==
