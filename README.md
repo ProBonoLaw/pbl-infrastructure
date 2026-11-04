@@ -41,6 +41,8 @@ After a successful Test `pulumi up`, the same workflow applies the public portal
 
 Configure GitHub Environments named `test` and `production`, each with `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_SUBSCRIPTION_ID` variables and a `PULUMI_CONFIG_PASSPHRASE` secret matching that stack's state. The federated credential subjects are `repo:<org>/<repo>:environment:test` and `repo:<org>/<repo>:environment:production` for whichever repository runs the workflows. Add required reviewers to the Production environment if Production workflow runs should require approval.
 
+The Azure preview and update jobs run only when the repository variable `AZURE_DEPLOY_ENABLED` is `true`. Leave it unset in a public copy so the workflows run just the build and verification; set it in the repository that actually deploys.
+
 Foundry account names are configurable. Set the optional GitHub Environment variables `FOUNDRY_PRIMARY_NAME` (default `aimie3-<suffix>`) and `FOUNDRY_DATA_LOADER_NAME` (default `data-loader-<suffix>`), or the Pulumi config keys `primaryFoundryName` and `dataLoaderFoundryName`. Names must be 2-64 letters, digits, or hyphens and globally unique, because each is also the account's custom subdomain. Azure cannot rename an existing account, so changing a name on a deployed stack replaces the account and its projects and model deployments. Leave the variables unset to keep the defaults.
 
 The state storage account is in resource group `Deployment`, subscription `00000000-0000-4000-8000-000000000004`. Each GitHub identity needs `Storage Blob Data Contributor` on its state container in that subscription and the required deployment permissions in its target subscription. The GitHub runner must be able to reach the storage account endpoint.
