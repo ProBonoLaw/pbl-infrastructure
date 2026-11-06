@@ -40,8 +40,9 @@ stack or alter Production application routing.
 - Submitted retirement of the Test AKS cluster and application resource groups,
   including resources not owned by Pulumi. Removed the two Test vault deletion
   locks within the authorized retirement scope. AKS, storage, Cosmos DB, AI
-  services, registries, vaults, monitoring, and networking are removed. Front Door
-  has removed its endpoint and is finishing deletion of the empty profile.
+  services, registries, application vaults, monitoring, networking, and Front Door
+  are removed. Azure lists only the retention-bound Recovery Services vault in
+  its existing resource group; the subscription is named Daat(Math).
 - Production Document Intelligence, three Content Understanding analyzers, and
   Cosmos DB metadata requests returned HTTP 200 during retirement.
 - Removed all four Test public DNS records, the obsolete deployment-state grant,
@@ -49,8 +50,10 @@ stack or alter Production application routing.
   remains in its original container.
 - Ten application workflow pull requests have passed checks and merged. The
   public infrastructure and Billing changes await the independent review
-  required by those repositories. The private infrastructure changes have their
-  own verification and merge process.
+  required by those repositories. The private infrastructure change has passed
+  its checks and merged; its main workflow verifies both graphs and skips all
+  Test Azure jobs. All 33 Production application deployments are available, and
+  the public site and five authenticated service checks return HTTP 200.
 
 ## Azure retention
 
