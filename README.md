@@ -1,6 +1,6 @@
 # Pro Bono Law infrastructure
 
-This repository defines the Test and Production Azure environments with Pulumi in TypeScript and the Azure Native provider. Each stack stores its state in a separate Azure Blob container.
+This repository defines Production and optional Test Azure environments with Pulumi in TypeScript and the Azure Native provider. Daat-Phoenix operates only the Production stack as the ProBonoLaw demo/production site. The former hosted Test subscription is being retired for reuse by Daat(Math); its application data is disposable. Contributors can still adapt and deploy the Test stack in their own subscription. Each deployed stack uses its own Azure Blob state container.
 
 ## Using this repository
 
@@ -33,15 +33,20 @@ npm run verify
 
 ## GitHub Actions
 
-The Test workflow verifies and previews same-repository pull requests. Changes pushed to `main` run verification and preview, then apply the Test stack with `pulumi up` if both pass. Manual Test runs default to preview and can select `up`. The Production workflow runs manually, defaults to preview, and can select `refresh` or `up`; `target_resources` can limit both the preview and update to specified Pulumi URNs. Production updates also require successful verification and preview in the same run. The preview is a failure gate; a manually selected `up` proceeds as soon as it passes unless GitHub Environment reviewers pause the deploy job. A manually selected non-`main` branch can access either stack only when `allow_non_main` is explicitly enabled. Both workflows use GitHub OIDC with the `deployment-manager-test` and `deployment-manager-prod` user-assigned identities, and store Pulumi state in the `test` and `prod` containers in the `pbldeployments` storage account.
+The `Build and test infrastructure` job runs on every pull request, including forks and documentation-only changes, and on qualifying pushes to `main`. It verifies both resource graphs without Azure credentials. Keep this required check enabled even when no Test environment is deployed.
 
-The Test workflow runs its `Build and test infrastructure` job on every pull request, including documentation-only changes and forks. The `main` branch requires that check to pass before a pull request can merge. The job compiles TypeScript and verifies both Test and Production resource graphs; its Azure preview job runs only for same-repository pull requests.
+Test Azure preview and update jobs are **opt-in**: both repository variables `AZURE_DEPLOY_ENABLED` and `TEST_ENVIRONMENT_ENABLED` must equal `true`. Otherwise only verification runs. When enabled, same-repository pull requests preview Test, qualifying pushes to `main` preview and update it, and manual runs default to preview. Non-`main` manual runs also require `allow_non_main`. Daat-Phoenix keeps `TEST_ENVIRONMENT_ENABLED=false` and has no hosted Test deployment credentials.
 
-After a successful Test `pulumi up`, the same workflow applies the public portal API ingress controller and cert-manager Issuer/Certificate through AKS Run Command. cert-manager renews the certificate in the Test cluster. The matching GoDaddy A record must point at the Test API public IP before the certificate can become Ready. Production bootstrap remains an explicit rollout step.
+Production remains a manual workflow gated by `AZURE_DEPLOY_ENABLED=true`. It defaults to preview and supports `refresh` or `up`, with optional resource targets/exclusions. Updates require successful verification and preview. Configure the `production` GitHub Environment with deployment variables, its Pulumi passphrase, and any required reviewers.
 
-Configure GitHub Environments named `test` and `production`, each with `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_SUBSCRIPTION_ID` variables and a `PULUMI_CONFIG_PASSPHRASE` secret matching that stack's state. The federated credential subjects are `repo:<org>/<repo>:environment:test` and `repo:<org>/<repo>:environment:production` for whichever repository runs the workflows. Add required reviewers to the Production environment if Production workflow runs should require approval.
+To deploy your own optional Test environment:
 
-The Azure preview and update jobs run only when the repository variable `AZURE_DEPLOY_ENABLED` is `true`. Leave it unset in a public copy so the workflows run just the build and verification; set it in the repository that actually deploys.
+1. Adapt `Pulumi.test.yaml`, the deployment-value mappings, resource names, and existing-resource imports for your subscription as described above, then set `environmentEnabled=true` in that stack. Test is disabled by default for both local and CI deployments. Graph checks explicitly enable the simulated stack without contacting Azure. The reference stack is not a turnkey fresh-subscription installer.
+2. Create a separate Test state container and a GitHub Environment named `test`, with `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`, and `PULUMI_CONFIG_PASSPHRASE`. Scope its OIDC identity to your own repository and Test subscription.
+3. Set both deployment repository variables to `true`, then run a manual preview before applying. The public API bootstrap runs after successful Test updates.
+4. Configure the Test custom domain and API-origin DNS for your deployment. If the Production stack owns their public DNS zone, set `manageTestPublicDns=true` in that stack and adapt the Test record values. The default is `false`: Production owns no Test DNS records. This setting does not provision Test; it only controls its four public DNS records.
+
+OIDC subjects are `repo:<org>/<repo>:environment:test` and `repo:<org>/<repo>:environment:production`. The optional Test switch does not change Production's deployment gate. Public copies should leave Azure deployment disabled.
 
 Foundry account names are configurable. Set the optional GitHub Environment variables `FOUNDRY_PRIMARY_NAME` (default `aimie3-<suffix>`) and `FOUNDRY_DATA_LOADER_NAME` (default `data-loader-<suffix>`), or the Pulumi config keys `primaryFoundryName` and `dataLoaderFoundryName`. Names must be 2-64 letters, digits, or hyphens and globally unique, because each is also the account's custom subdomain. Azure cannot rename an existing account, so changing a name on a deployed stack replaces the account and its projects and model deployments. Leave the variables unset to keep the defaults.
 
@@ -87,9 +92,11 @@ pulumi stack select <test-or-prod>
 pulumi preview --stack <test-or-prod> --diff
 ```
 
-Use `test` with the Test subscription and `azblob://test`; use `prod` with the Production subscription and `azblob://prod`. Set the stack's passphrase in `PULUMI_CONFIG_PASSPHRASE` when prompted or when running noninteractive commands. Review a standalone preview before selecting a manual GitHub `up` or running a local `pulumi up`. Test updates on `main` run automatically after verification and preview.
+Use `test` with the Test subscription and `azblob://test`; use `prod` with the Production subscription and `azblob://prod`. Set the stack's passphrase in `PULUMI_CONFIG_PASSPHRASE` when prompted or when running noninteractive commands. Review a standalone preview before selecting a manual GitHub `up` or running a local `pulumi up`. Test updates on `main` run only when both opt-in repository variables are enabled. Daat-Phoenix deploys only `prod`.
 
-## Environment notes
+## Historical environment notes
+
+The following migration records describe the former two-environment installation. They do not imply that Daat-Phoenix still operates Test. See [the hosted Test retirement record](docs/hosted-test-retirement-2026-11-06.md) for the current deployment policy and retirement status.
 
 Test and Production use separate subscriptions and Pulumi stacks. Both have an AKS cluster in North Central US. Production uses a separate container registry and secrets vault. The Production Azure Monitor workspace for managed Prometheus is in Central US because that workspace resource is unavailable in North Central US.
 

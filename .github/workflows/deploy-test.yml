@@ -1,4 +1,4 @@
-name: Deploy Test Infrastructure
+name: Verify infrastructure and optional Test deployment
 
 on:
   pull_request:
@@ -74,6 +74,12 @@ jobs:
           GRAPH_KEEP_LEGACY_PORTAL_WEB_APP: "false"
           GRAPH_PRODUCTION_APEX_FRONT_DOOR: "true"
 
+      - name: Verify optional Test public DNS
+        run: node scripts/verify-graph.js
+        env:
+          GRAPH_ENVIRONMENT_NAME: Production
+          GRAPH_MANAGE_TEST_PUBLIC_DNS: "true"
+
       - name: Set up Python for storage migration tests
         uses: actions/setup-python@v6
         with:
@@ -98,7 +104,7 @@ jobs:
   preview:
     name: Preview Test stack
     needs: verify
-    if: ${{ vars.AZURE_DEPLOY_ENABLED == 'true' && ((github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) || github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.allow_non_main)) }}
+    if: ${{ vars.AZURE_DEPLOY_ENABLED == 'true' && vars.TEST_ENVIRONMENT_ENABLED == 'true' && ((github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) || github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.allow_non_main)) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment: test
@@ -149,7 +155,7 @@ jobs:
   deploy:
     name: Update Test stack
     needs: preview
-    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.operation == 'up' && (github.ref == 'refs/heads/main' || inputs.allow_non_main)) }}
+    if: ${{ vars.AZURE_DEPLOY_ENABLED == 'true' && vars.TEST_ENVIRONMENT_ENABLED == 'true' && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.operation == 'up' && (github.ref == 'refs/heads/main' || inputs.allow_non_main))) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     environment: test

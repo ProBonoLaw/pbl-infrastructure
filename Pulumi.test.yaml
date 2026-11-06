@@ -1,5 +1,6 @@
 config:
   probonolaw-infrastructure:environmentName: Test
+  probonolaw-infrastructure:environmentEnabled: false
   probonolaw-infrastructure:cosmosProvisioned: true
   probonolaw-infrastructure:cosmosNorthCentral: true
   probonolaw-infrastructure:skuName: B1
