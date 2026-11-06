@@ -6,6 +6,7 @@ const yaml = require("yaml");
 
 const environmentName = process.env.GRAPH_ENVIRONMENT_NAME ?? "Test";
 const stackName = environmentName === "Test" ? "test" : "prod";
+const manageTestPublicDns = process.env.GRAPH_MANAGE_TEST_PUBLIC_DNS === "true";
 const stackConfig = yaml.parse(
   fs.readFileSync(path.join(__dirname, `../Pulumi.${stackName}.yaml`), "utf8"),
 ).config;
@@ -52,6 +53,9 @@ const stagedStorageCount =
   Number(stageSharedStorageNorthCentral) +
   Number(stageAimieStorageNorthCentral);
 process.env.PULUMI_CONFIG = JSON.stringify({
+  "probonolaw-infrastructure:environmentEnabled":
+    process.env.GRAPH_ENVIRONMENT_ENABLED ?? "true",
+  "probonolaw-infrastructure:manageTestPublicDns": String(manageTestPublicDns),
   "probonolaw-infrastructure:environmentName": environmentName,
   "probonolaw-infrastructure:skuName": skuName,
   "probonolaw-infrastructure:cosmosNorthCentral": String(cosmosNorthCentral),
@@ -284,7 +288,9 @@ async function main() {
     "azure-native:cdn:Route": 2,
     "azure-native:cdn:AFDCustomDomain": test ? 1 : 2,
     "azure-native:dns:Zone": test ? 0 : 1,
-    "azure-native:dns:RecordSet": test ? 0 : keepLegacyPortalWebApp ? 22 : 21,
+    "azure-native:dns:RecordSet": test
+      ? 0
+      : 17 + Number(keepLegacyPortalWebApp) + (manageTestPublicDns ? 4 : 0),
     "azure-native:operationalinsights:Workspace": test ? 6 : 10,
     "azure-native:applicationinsights:Component": test ? 6 : 9,
     "azure-native:authorization:RoleAssignment": 47,
@@ -636,7 +642,10 @@ async function main() {
   if (test) {
     assert.equal(testDomain.inputs.hostName, "test.probono-law.com");
     assert.equal(testDomain.inputs.tlsSettings.minimumTlsVersion, "TLS12");
-    assert.equal(testDomain.inputs.tlsSettings.cipherSuiteSetType, "TLS12_2023");
+    assert.equal(
+      testDomain.inputs.tlsSettings.cipherSuiteSetType,
+      "TLS12_2023",
+    );
     assert.equal(
       testDomain.inputs.tlsSettings.certificateType,
       "ManagedCertificate",
@@ -690,7 +699,9 @@ async function main() {
         "/mock/portal-front-door-endpoint",
       );
     } else {
-      assert.deepEqual(apex.inputs.aRecords, [{ ipv4Address: "203.0.113.153" }]);
+      assert.deepEqual(apex.inputs.aRecords, [
+        { ipv4Address: "203.0.113.153" },
+      ]);
       assert.equal(
         apex.inputs.targetResource,
         undefined,
@@ -709,10 +720,24 @@ async function main() {
     const testCname = resources.find(
       ({ name }) => name === "portal-production-test-cname",
     );
-    assert.equal(
-      testCname.inputs.cnameRecord.cname,
-      "probonolaw-test-testsuffix001-c8e0avf5dyccc6a3.z01.azurefd.net",
-    );
+    assert.equal(!!testCname, manageTestPublicDns);
+    if (manageTestPublicDns) {
+      assert.equal(
+        testCname.inputs.cnameRecord.cname,
+        "probonolaw-test-testsuffix001-c8e0avf5dyccc6a3.z01.azurefd.net",
+      );
+    }
+    for (const name of [
+      "portal-production-test-api-origin",
+      "portal-production-asuid-test-txt",
+      "portal-production-test-front-door-txt",
+    ]) {
+      assert.equal(
+        resources.some((resource) => resource.name === name),
+        manageTestPublicDns,
+        name,
+      );
+    }
     const wwwCname = resources.find(
       ({ name }) => name === "portal-production-www-cname",
     );

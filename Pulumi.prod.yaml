@@ -7,6 +7,7 @@ config:
   probonolaw-infrastructure:keepLegacyPortalWebApp: false
   probonolaw-infrastructure:productionLegacyApexIp: 203.0.113.153
   probonolaw-infrastructure:productionApexFrontDoor: true
+  probonolaw-infrastructure:manageTestPublicDns: false
   probonolaw-infrastructure:stageAimieStorageNorthCentral: true
   probonolaw-infrastructure:stageSharedStorageNorthCentral: true
   probonolaw-infrastructure:aksNodeMinCount: 5

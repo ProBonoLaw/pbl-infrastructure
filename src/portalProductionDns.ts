@@ -1,7 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import { cdn, dns, network, resources } from "@pulumi/azure-native";
 
-/** Mirror the current GoDaddy zone before any registrar nameserver change. */
+/** Public application and mail DNS, with optional records for a Test stack. */
 export function createProductionPublicDnsZone(
   portalGroup: resources.ResourceGroup,
   endpoint: cdn.AFDEndpoint,
@@ -18,6 +18,7 @@ export function createProductionPublicDnsZone(
     throw new Error("productionLegacyApexIp must be an IPv4 address");
   }
   const frontDoorApex = config.getBoolean("productionApexFrontDoor") ?? false;
+  const manageTestPublicDns = config.getBoolean("manageTestPublicDns") ?? false;
   const zone = new dns.Zone("portal-production-public-dns-zone", {
     zoneName: "probono-law.com",
     resourceGroupName: portalGroup.name,
@@ -41,13 +42,14 @@ export function createProductionPublicDnsZone(
       ? { targetResource: { id: endpoint.id } }
       : { aRecords: [{ ipv4Address: legacyApexIp }] }),
   });
-  new dns.RecordSet("portal-production-test-api-origin", {
-    ...base,
-    relativeRecordSetName: "api-origin-testsuffix001",
-    recordType: "A",
-    ttl: 600,
-    aRecords: [{ ipv4Address: "203.0.113.154" }],
-  });
+  if (manageTestPublicDns)
+    new dns.RecordSet("portal-production-test-api-origin", {
+      ...base,
+      relativeRecordSetName: "api-origin-testsuffix001",
+      recordType: "A",
+      ttl: 600,
+      aRecords: [{ ipv4Address: "203.0.113.154" }],
+    });
   new dns.RecordSet("portal-production-prod-api-origin", {
     ...base,
     relativeRecordSetName: pulumi.interpolate`api-origin-${suffix}`,
@@ -74,11 +76,15 @@ export function createProductionPublicDnsZone(
       ],
       ["lyncdiscover", "lyncdiscover", "webdir.online.lync.com"],
       ["sip", "sip", "sipdir.online.lync.com"],
-      [
-        "test",
-        "test",
-        "probonolaw-test-testsuffix001-c8e0avf5dyccc6a3.z01.azurefd.net",
-      ],
+      ...(manageTestPublicDns
+        ? [
+            [
+              "test",
+              "test",
+              "probonolaw-test-testsuffix001-c8e0avf5dyccc6a3.z01.azurefd.net",
+            ] as const,
+          ]
+        : []),
       ["www", "www", endpoint.hostName],
       [
         "domainconnect",
@@ -117,13 +123,27 @@ export function createProductionPublicDnsZone(
       ["MS=ms46028757", "v=spf1 include:spf.protection.outlook.com -all"],
     ],
     ["asuid", "asuid", [verification]],
-    [
-      "asuid-test",
-      "asuid.test",
-      ["0731A41B0710D9DF32529BF19F02E92AAE3D08EBA90D63A776C710175501463C"],
-    ],
+    ...(manageTestPublicDns
+      ? [
+          [
+            "asuid-test",
+            "asuid.test",
+            [
+              "0731A41B0710D9DF32529BF19F02E92AAE3D08EBA90D63A776C710175501463C",
+            ],
+          ] as [string, string, string[]],
+        ]
+      : []),
     ["asuid-www", "asuid.www", [verification]],
-    ["test-front-door", "_dnsauth.test", ["_9rgp4hzlx6mwyznojg5umas2w2nt1jh"]],
+    ...(manageTestPublicDns
+      ? [
+          [
+            "test-front-door",
+            "_dnsauth.test",
+            ["_9rgp4hzlx6mwyznojg5umas2w2nt1jh"],
+          ] as [string, string, string[]],
+        ]
+      : []),
   ];
   for (const [key, name, values] of txtRecords) {
     new dns.RecordSet(`portal-production-${key}-txt`, {

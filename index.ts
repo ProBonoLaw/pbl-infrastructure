@@ -22,6 +22,11 @@ import { createVideoIndexer } from "./src/videoIndexer";
 
 const config = new pulumi.Config();
 const environmentName = config.require("environmentName");
+if (!(config.getBoolean("environmentEnabled") ?? environmentName !== "Test")) {
+  throw new Error(
+    "This stack is disabled. Configure a dedicated subscription and set environmentEnabled=true before deploying it.",
+  );
+}
 const skuName = config.require("skuName");
 const keepLegacyPortalWebApp =
   config.getBoolean("keepLegacyPortalWebApp") ?? false;
