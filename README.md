@@ -1,6 +1,6 @@
 # Pro Bono Law infrastructure
 
-This repository defines Production and optional Test Azure environments with Pulumi in TypeScript and the Azure Native provider. Daat-Phoenix operates only the Production stack as the ProBonoLaw demo/production site. The former hosted Test subscription is being retired for reuse by Daat(Math); its application data is disposable. Contributors can still adapt and deploy the Test stack in their own subscription. Each deployed stack uses its own Azure Blob state container.
+This repository defines Production and optional Test Azure environments with Pulumi in TypeScript and the Azure Native provider. Daat-Phoenix operates only the Production stack as the ProBonoLaw demo/production site. The former hosted Test subscription is now named Daat(Math); its running application and data have been removed. Azure retention and final cleanup are tracked in the retirement record. Contributors can still adapt and deploy the Test stack in their own subscription. Each deployed stack uses its own Azure Blob state container.
 
 ## Using this repository
 
